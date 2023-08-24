@@ -7,7 +7,7 @@
   hey there
   <img src="https://media.giphy.com/media/hvRJCLFzcasrR4ia7z/giphy.gif" width="30px"/>
   </h1> 
-  <b>This is E-commercer Website Based on Django</b><br><br>
+  <b>This is E-COMMERCE Website Based on Django</b><br><br>
   <ul>
   <li>This is build on HTML, BOOTSTRAP,JQUERY,CSS,JAVASCRIPT.</li>
   <li>BackEnd of this website is managed by Django</li>
