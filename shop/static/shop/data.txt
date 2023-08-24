@@ -1,0 +1,1 @@
+this is text file which is present in shop app of django.

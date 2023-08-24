@@ -1,0 +1,110 @@
+{% extends 'shop/index.html' %}
+{% block title %} Contact Us {% endblock %}
+{% block cart %}{% endblock %}
+{% block search %}{% endblock %}
+{% block login %}{% endblock %}
+{% block login_btn %}{% endblock %}
+{% block body %}
+<style>
+    .container{
+        color:white;
+    }
+    form label
+    {
+        font-size:25px;
+        padding:10px;
+    }
+    body
+    {
+        background:linear-gradient(to right, rgb(48, 42, 31),rgb(54, 101, 137));
+    }
+</style>
+<div class="container my-2">
+    <h1><b>Contact Us</b></h1>
+    <form action="#" id="contact_form" method="post"> {% csrf_token %}
+        <div class="form-group my-2">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name here">
+        </div>
+
+        <div class="form-group my-2">
+            <label for="emailid">Email address</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
+        </div>
+
+        <div class="form-group my-2">
+            <label for="phoneno">Contact Number</label>
+            <input type="tel" class="form-control" name="phone"  id="phone" placeholder="Contact Number" pattern="^\d{10}$" required  >
+        </div>
+
+        <div class="form-group my-2">
+            <label for="exampleFormControlSelect1 my-2">Query Type</label>
+            <select class="form-control" id="querytype" name="querytype">
+                <option>Issues Related to product</option>
+                <option>Issues Related to Address</option>
+                <option>Issues Related to Delivery</option>
+                <option>Return the Product</option>
+                <option>Other</option>
+            </select>
+        </div>
+
+        <div class="form-group my-2">
+            <label for="querytext">Write query here</label>
+            <textarea class="form-control" id="query_desc" name="query_desc" rows="3" placeholder="Give Details about your query here"></textarea>
+        </div>
+
+        <div class="form-group my-2">
+            <label for="feedbacktext">Would, you like to give us feedback !</label>
+            <textarea class="form-control" id="feedback" rows="3" name="feedback" placeholder="Give Us feedback here!"></textarea>
+        </div>
+
+        <button type="submit" id="contact_submit" class="btn btn-success">Submit</button>
+    </form>
+</div>
+
+{% endblock %}
+
+
+{% block script %}
+<script>
+    console.log('working')
+    if (localStorage.getItem('cart') == null) {
+        var cart = {};
+    }
+    else {
+        cart = JSON.parse(localStorage.getItem('cart'));
+        // document.getElementById('cart').innerHTML = Object.keys(cart).length;
+
+    }
+    //jQuery starts here//
+    $('.cart').click(function () {
+        console.log('clicked');
+        var idstr = this.id.toString();
+        console.log(idstr);
+        if (cart[idstr] != undefined) {
+            cart[idstr] = cart[idstr] + 1;
+        }
+        else {
+            cart[idstr] = 1;
+        }
+        console.log(cart);
+        localStorage.setItem('cart', JSON.stringify(cart));
+
+    });
+
+    // $('#popcart').popover();
+    // document.getElementById("popcart").setAttribute('data-content', '<h5>Cart</h5>');
+</script>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script>
+    $('#contact_submit').click(function () {
+        alert('Thank for contact Us. We Will reach you soon!');
+        window.location="http://127.0.0.1:8000/shop/";
+    });
+</script>
+
+
+
+{% endblock %}
+

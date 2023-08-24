@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In / Sign Up</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'shop/css/style.css' %}" />
+</head>
+
+<body>
+    <div class="contain">
+
+        <div class="container">
+            <div class="backbox">
+                <div class="loginMsg">
+                    <div class="textcontent">
+                        <p class="title">Don't have an account?</p>
+                        <p>Sign up for better experience.</p>
+                        <button id="switch1">Sign Up</button>
+                    </div>
+                </div>
+                <div class="signupMsg visibility">
+                    <div class="textcontent">
+                        <p class="title">Have an account?</p>
+                        <p>Log in to see all your collection.</p>
+                        <button id="switch2">LOG IN</button>
+                    </div>
+                </div>
+            </div>
+            <!-- backbox -->
+
+            <div class="frontbox">
+                <div class="login">
+                    <form action="/shop/logging/" method="post">{% csrf_token %}
+                        <h2>LOG IN</h2>
+                        <div class="inputbox">
+                            <input type="text" id="email" name="login_email" placeholder="  EMAIL">
+                            <input type="text" id="password" name="login_password" placeholder="  PASSWORD">
+                        </div>
+                        <button type="submit" id="btn1">LOG IN</button>
+                    </form> 
+                </div>
+
+                <div class="signup hide">
+                    <form action="/shop/sign_up/" method="post">{% csrf_token %}
+                        <h2>SIGN UP</h2>
+                        <div class="inputbox">
+                            <input type="text" name="signup_fullname" placeholder="  FULLNAME">
+                            <input type="email" name="signup_email" placeholder="  EMAIL">
+                            <input type="password" name="signup_password" placeholder="  PASSWORD">
+                        </div>
+                        <button  type="submit" id="btn2">SIGN UP</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // for signing up button
+        $('#btn2').click(function () {
+            alert("You are signed successfully!");
+        });
+        
+        $('#btn1').click(function () {
+            // document.getElementById("email").value="";
+            // document.getElementById("password").value="";
+        });
+        // for login button
+        // $('#btn1').click(function () {
+        //     user_name = document.getElementById('email').value;
+        //     user_password = document.getElementById('password').value;
+        //     console.log(user_name);
+        //     console.log(user_password);
+
+        //     if ((user_name == "admin") && (user_password) == "123") {
+        //         window.location = "http://127.0.0.1:8000/admin/"
+        //     }
+        //     else 
+        //     {
+        //         console.log("no password found")
+        //     }
+
+        // });
+    </script>
+</body>
+<script src="{% static 'shop/loginjs/login.js' %}"></script>
+
+</html>
+
+</html>

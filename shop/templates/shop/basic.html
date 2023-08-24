@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title%} Bootstrap demo {% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <style>
+        .card {
+            display: inline-block;
+            left: 280px;
+        }
+
+        .category {
+            margin-left: 340px;
+        }
+
+
+        img {
+            width: 500px;
+        }
+
+        .container {
+            height: 100px;
+            margin-left: 250px;
+        }
+
+        .carousel-inner {
+            margin-left: 50px;
+        }
+
+        .card-img-top {
+            height: 250px;
+            width: 250px;
+            margin-left: 15px;
+        }
+
+        body .carousel-control-prev-icon,
+        body .carousel-control-next-icon {
+            background-color: rgb(13, 13, 14);
+        }
+
+        .carousel-control-prev {
+            margin-top: 150px;
+            bottom: auto;
+
+        }
+
+        .carousel-control-next {
+            margin-top: 150px;
+            bottom: auto;
+            margin-left: 90px;
+        }
+
+        body {
+            background-color: rgb(255, 255, 255);
+        }
+    </style>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Awsome Cart</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/shop/about">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/shop/tracker">Tracker</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/shop/contact">Contact Us</a>
+                    </li>
+                </ul>
+
+                <button type="button" class="btn btn-secondary mx-2" id="popcart" data-container="body"
+                    data-toggle="popover" data-placement="bottom" data-html="true"
+                    data-content="This item has been added">
+                    Cart(<span id="cart">0</span>)
+                </button>
+
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+
+
+            </div>
+        </div>
+    </nav>
+
+
+
+    <div class="container-fluid my-4">
+
+        {% for products in allprods %}
+        <h3><span class="category">Flash Sales on {{products.0.category}} - Recommended Items</span></h3>
+        <div class="row">
+            <div id="carouselExampleAutoplaying{{forloop.counter}}" class="carousel slide" data-bs-ride="carousel">
+
+                <div class="carousel-inner">
+
+                    <div class="carousel-item active" data-bs-interval="2000">
+
+                        {% for i in products|slice:"0:" %}
+                        <div class="card" style="width: 18rem;">
+                            <img src="/media/{{i.image}}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">{{i.product_name}}</h5>
+                                <p class="card-text">{{i.description}}</p>
+                                <button href="#" id="pr{{i.id}}" class="btn btn-primary cart ">Add To Cart</button>
+                            </div>
+                        </div>
+                        {% if forloop.counter|divisibleby:4 and forloop.counter > 0 and not forloop.last%}
+                    </div>
+                    <div class="carousel-item" data-bs-interval="2000">
+                        {% endif %}
+
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <button class="carousel-control-prev" type="button"
+                    data-bs-target="#carouselExampleAutoplaying{{forloop.counter}}" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button"
+                    data-bs-target="#carouselExampleAutoplaying{{forloop.counter}}" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+        <br>
+        {% endfor %}
+
+    </div>
+
+
+    <!-- {% load static %}
+    <a href="{% static 'shop/data.txt' %}">click here for text</a>
+    <a href="{% static 'shop/img23.jpg' %}">click here for image</a> -->
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"
+        integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
+
+    <script>
+        console.log('working')
+        if (localStorage.getItem('cart') == null) {
+            var cart = {};
+        }
+        else {
+            cart = JSON.parse(localStorage.getItem('cart'));
+            document.getElementById('cart').innerHTML = Object.keys(cart).length;
+
+        }
+        //jQuery starts here//
+        $('.cart').click(function () {
+            console.log('clicked');
+            var idstr = this.id.toString();
+            console.log(idstr);
+            if (cart[idstr] != undefined) {
+                cart[idstr] = cart[idstr] + 1;
+            }
+            else {
+                cart[idstr] = 1;
+            }
+            console.log(cart);
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+        });
+
+        $('#popcart').popover('show')
+        document.getElementById("popcart").setAttribute('data-content', 'This is cart which you are looking for');
+    </script>
+
+</body>
+
+</html>

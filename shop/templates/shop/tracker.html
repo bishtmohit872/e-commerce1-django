@@ -1,0 +1,142 @@
+{% extends 'shop/index.html' %}
+{% block title %} Awsome Cart Tracker {% endblock %}
+{% block cart %}{% endblock %}
+{% block search %}{% endblock %}
+{% block login %}{% endblock %}
+{% block login_btn %}{% endblock %}
+
+
+{% block body %}
+<style>
+    *{
+        color:white;
+    }
+    body
+    {
+        background:linear-gradient(to right, rgb(48, 42, 31),rgb(54, 101, 137));
+    }
+</style>
+<div class="container">
+    <div class="col my-4">
+        <h2>Track Your Order Here!</h2>
+
+        <form class="row g-3" method="post" id="trackerform" action="#">{% csrf_token %}
+
+            <div class="col-md-6">
+                <label for="inputname4" class="form-label"><i>Order ID</i></label>
+                <input type="text" name="orderid" class="form-control" id="orderid" placeholder="Order ID">
+            </div>
+
+            <div class="col-md-6">
+                <label for="inputEmail4" class="form-label"><i>Email</i></label>
+                <input type="email" name="email" class="form-control" id="inputEmail4"
+                    placeholder="Enter your Email Here">
+            </div>
+
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Track Order</button>
+            </div>
+        </form>
+
+    </div>
+    <div class="col my-4">
+        <h2>Order Tracking Status</h2>
+        <div class="my-4">
+            <ol class="list-group list-group-numbered" id="items">
+                Type Order ID and Email correctly then click on "Track Order" button to find Details of your order.
+            </ol>
+        </div>
+
+        <h2>Your order Details</h2>
+        <div class="my-4">
+            <ol class="list-group list-group-numbered" id="order_items">
+                
+            </ol>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+{% block js %}
+<script>
+    $('#trackerform').submit(function(event){
+        $('#items').empty();
+
+        var formdata={'orderid': $('input[name=orderid]').val(), 'email': $('input[name=email]').val(), 'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()};
+        
+        $.ajax({
+            type:'POST',
+            url: '/shop/tracker/',
+            data: formdata,
+            encode: true
+        })
+        .done(function(data){
+            data=JSON.parse(data);
+            updates=data[0];
+
+            console.log(updates.length);
+            if(updates.length > 0 & updates != {})
+            {
+            
+                for (i=0;i<updates.length;i++) 
+                {
+                    let text = updates[i]['text'];
+                    let time = updates[i]['time'];
+
+                    mystr = `<li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold">${text}</div>
+                            </div>
+                            <span class="badge bg-success rounded-pill">${time}</span>
+                            </li>`
+                    $('#items').append(mystr);
+                }
+                //showing the order details 
+                cart=JSON.parse(data[1]);
+                console.log(cart);
+                for (item in cart) 
+                {
+                    let qty = cart[item][0];
+                    let name = cart[item][1];
+                    //let id=cart[item][3].slice(2,5);
+                    mystr = `<li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold">${name}</div>
+                            </div>
+                            <span class="badge bg-success rounded-pill">${qty}</span>
+                            </li>`
+                    $('#order_items').append(mystr);
+                }
+            }
+
+            else
+            {
+                mystr = `<li class="d-flex justify-content-between align-items-start">
+                            Sorry we could'nt find track of your Order :( , Make Sure you type correct Order ID  and Email Correspond to Order ID.
+                            </li>`
+                $('#items').append(mystr);
+            }
+
+            // //showing the order details 
+            // cart=JSON.parse(data[1]);
+            // console.log(cart);
+            // for (item in cart) 
+            // {
+            //     let qty = cart[item][0];
+            //     let name = cart[item][1];
+            //     mystr = `<li class="list-group-item d-flex justify-content-between align-items-start">
+            //             <div class="ms-2 me-auto">
+            //                 <div class="fw-bold">${name}</div>
+            //             </div>
+            //             <span class="badge bg-success rounded-pill">${qty}</span>
+            //             </li>`
+            //     $('#order_items').append(mystr);
+            // }
+
+        });
+        event.preventDefault();
+    })
+</script>
+{% endblock %}
